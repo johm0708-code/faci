@@ -18,7 +18,7 @@ user_input = st.text_input("시설물 관련 질문을 입력하세요:")
 if user_input:
     try:
         # 최신 OpenAI API 방식에 맞춰서 대화형 모델 호출
-        response = openai.chat_completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",  # gpt-3.5-turbo 모델 사용
             messages=[{"role": "user", "content": user_input}],
         )
