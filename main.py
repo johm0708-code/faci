@@ -17,16 +17,17 @@ user_input = st.text_input("시설물 관련 질문을 입력하세요:")
 # OpenAI API를 사용하여 답변 생성
 if user_input:
     try:
-        # OpenAI의 최신 API 방식에 맞춰서 답변 생성
-        response = openai.completions.create(
+        # 최신 OpenAI API 방식에 맞춰서 채팅 모델 사용
+        response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",  # gpt-3.5-turbo 모델 사용
-            prompt=user_input,
-            max_tokens=150,
-            temperature=0.7
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": user_input}
+            ]
         )
         
         # 생성된 답변을 화면에 출력
-        answer = response['choices'][0]['text'].strip()
+        answer = response['choices'][0]['message']['content']
         st.write("**답변:**", answer)
     except Exception as e:
         st.error(f"오류가 발생했습니다: {e}")
